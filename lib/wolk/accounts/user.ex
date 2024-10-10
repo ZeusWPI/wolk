@@ -4,6 +4,8 @@ defmodule Wolk.Accounts.User do
   alias Wolk.Accounts.User
   alias Wolk.Repo
 
+  @derive {Jason.Encoder, only: [:name, :admin]}
+
   schema "users" do
     field :name, :string
     field :admin, :boolean, default: false
