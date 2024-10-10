@@ -1,6 +1,8 @@
 defmodule Wolk.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Wolk.Accounts.User
+  alias Wolk.Repo
 
   schema "users" do
     field :name, :string
@@ -14,5 +16,17 @@ defmodule Wolk.Accounts.User do
     user
     |> cast(attrs, [:name, :admin])
     |> validate_required([:name, :admin])
+  end
+
+  def findOrCreateUser(user_data) do
+    changeset = changeset(%User{}, user_data)
+
+    case Repo.get_by(User, name: changeset.changes.name) do
+      nil ->
+        Repo.insert(changeset)
+
+      user ->
+        {:ok, user}
+    end
   end
 end
