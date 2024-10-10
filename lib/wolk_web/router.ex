@@ -40,7 +40,7 @@ defmodule WolkWeb.Router do
   scope "/hoofdjes", WolkWeb do
     pipe_through :browser
 
-    resources "/", HoofdjeController, only: [:index]
+    live "/", LiveHoofdje
   end
 
   # Other scopes may use custom stacks.
