@@ -23,18 +23,24 @@ defmodule WolkWeb.Router do
     get "/", PageController, :home
   end
 
-  scope "/albums", WolkWeb do
-    pipe_through :browser
-
-    resources "/", AlbumController, only: [:index]
-  end
-
   scope "/auth", WolkWeb do
     pipe_through :browser
 
     get "/signout", AuthController, :signout
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
+  end
+
+  scope "/albums", WolkWeb do
+    pipe_through :browser
+
+    resources "/", AlbumController, only: [:index]
+  end
+
+  scope "/hoofdjes", WolkWeb do
+    pipe_through :browser
+
+    resources "/", HoofdjeController, only: [:index]
   end
 
   # Other scopes may use custom stacks.
