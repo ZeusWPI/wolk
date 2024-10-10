@@ -59,7 +59,9 @@ defmodule Wolk.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:live_svelte, "~> 0.14.0"}
+      {:live_svelte, "~> 0.14.0"},
+      {:ueberauth, "~> 0.10"},
+      {:ueberauth_zauth, github: "zeusWPI/ueberauth_zauth"}
     ]
   end
 
