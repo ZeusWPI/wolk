@@ -18,15 +18,13 @@ defmodule WolkWeb.Router do
   scope "/", WolkWeb do
     pipe_through :browser
 
-    live "/svelte", SvelteLive
-
     get "/", PageController, :home
   end
 
   scope "/albums", WolkWeb do
     pipe_through :browser
 
-    resources "/", AlbumController, only: [:index, :create]
+    live "/", AlbumLive
   end
 
   scope "/auth", WolkWeb do
