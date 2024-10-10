@@ -25,7 +25,8 @@ config :wolk, WolkWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "BGZBa6f14eHXWOFdQIc2ocEFoVADrx73EkG4mS4LymT+H7gSfJmOshkORLGWbqka",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:wolk, ~w(--sourcemap=inline --watch)]},
+    node: ["build.js", "--watch", cd: Path.expand("../assets", __DIR__)],
+    # esbuild: {Esbuild, :install_and_run, [:wolk, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:wolk, ~w(--watch)]}
   ]
 

@@ -9,12 +9,13 @@ module.exports = {
   content: [
     "./js/**/*.js",
     "../lib/wolk_web.ex",
-    "../lib/wolk_web/**/*.*ex"
+    "../lib/wolk_web/**/*.*ex",
+    "./svelte/**/*.svelte"
   ],
   theme: {
     extend: {
       colors: {
-        brand: "#FD4F00",
+        brand: "#FF7F00",
       }
     },
   },

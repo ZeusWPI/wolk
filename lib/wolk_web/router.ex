@@ -17,6 +17,8 @@ defmodule WolkWeb.Router do
   scope "/", WolkWeb do
     pipe_through :browser
 
+    live "/svelte", SvelteLive
+
     get "/", PageController, :home
   end
 

@@ -86,6 +86,7 @@ defmodule WolkWeb do
       # Core UI components and translation
       import WolkWeb.CoreComponents
       import WolkWeb.Gettext
+      import LiveSvelte
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
