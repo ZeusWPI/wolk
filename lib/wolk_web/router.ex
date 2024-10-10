@@ -8,6 +8,7 @@ defmodule WolkWeb.Router do
     plug :put_root_layout, html: {WolkWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug WolkWeb.Plugs.SetUser
   end
 
   pipeline :api do
