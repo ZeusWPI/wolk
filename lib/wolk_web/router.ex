@@ -26,7 +26,7 @@ defmodule WolkWeb.Router do
   scope "/albums", WolkWeb do
     pipe_through :browser
 
-    resources "/", AlbumController, only: [:index]
+    resources "/", AlbumController, only: [:index, :create]
   end
 
   scope "/auth", WolkWeb do
