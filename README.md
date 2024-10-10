@@ -8,8 +8,9 @@ Make sure the following tools are installed:
 
 
 - Run `asdf install`
-- Run `mix setup` to install all the dependencies
 - Start the services in the docker compose file or your postgres & minio servers
+- Run `mix setup` to install all the dependencies
+- Run `npm i --prefix=./assets` to create your database
 - Run `mix ecto.setup` to create your database
 - Run `mix phx.server` to start you development server
 
