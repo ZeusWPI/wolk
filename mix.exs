@@ -73,7 +73,11 @@ defmodule Wolk.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "npm install --prefix assets"],
+      setup: [
+        "deps.get",
+        "ecto.setup",
+        "run -e 'System.cmd(\"pnpm\", [\"install\"], cd: \"./assets\", into: IO.stream())'"
+      ],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
