@@ -21,18 +21,24 @@ defmodule WolkWeb.Router do
     get "/", PageController, :home
   end
 
-  scope "/albums", WolkWeb do
-    pipe_through :browser
-
-    live "/", AlbumLive
-  end
-
   scope "/auth", WolkWeb do
     pipe_through :browser
 
     get "/signout", AuthController, :signout
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
+  end
+
+  scope "/albums", WolkWeb do
+    pipe_through :browser
+
+    live "/", AlbumLive
+  end
+
+  scope "/hoofdjes", WolkWeb do
+    pipe_through :browser
+
+    live "/", LiveHoofdje
   end
 
   # Other scopes may use custom stacks.
