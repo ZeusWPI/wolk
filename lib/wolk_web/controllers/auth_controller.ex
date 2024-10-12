@@ -12,6 +12,7 @@ defmodule WolkWeb.AuthController do
         conn
         |> put_flash(:info, "Welcome back!")
         |> put_session(:user_id, user.id)
+        |> put_session(:live_socket_id, "user_socket:#{user.id}")
         |> redirect(to: "/")
 
       {:error, _} ->
@@ -22,6 +23,8 @@ defmodule WolkWeb.AuthController do
   end
 
   def signout(conn, _params) do
+    WolkWeb.Endpoint.broadcast("users_socket:#{conn.assigns[:user].id}", "disconnect", %{})
+
     conn
     |> configure_session(drop: true)
     |> redirect(to: "/")

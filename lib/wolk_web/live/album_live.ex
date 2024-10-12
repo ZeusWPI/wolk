@@ -3,7 +3,7 @@ defmodule WolkWeb.AlbumLive do
 
   def render(assigns) do
     ~H"""
-    <.svelte name="Album" />
+    <.svelte name="Album" socket={@socket} />
     """
   end
 end

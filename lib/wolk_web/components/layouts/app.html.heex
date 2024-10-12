@@ -4,4 +4,9 @@
     <%= @inner_content %>
   </div>
 </main>
-<.svelte name="nav/BottomBar" props={%{user: @conn.assigns[:user]}} } />
+<%= if @user != nil do %>
+  <.svelte name="nav/BottomBar" props={%{user: @user}} } />
+<% end %>
+<%= if assigns != nil do %>
+  <.svelte name="nav/BottomBar" props={%{user: assigns[:user]}} } />
+<% end %>
