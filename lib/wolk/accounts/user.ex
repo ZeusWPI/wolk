@@ -9,7 +9,7 @@ defmodule Wolk.Accounts.User do
   schema "users" do
     field :name, :string
     field :admin, :boolean, default: false
-    field :hoofdje_id, :integer
+    has_one :hoofdje, Hoofdje
 
     timestamps(type: :utc_datetime)
   end
