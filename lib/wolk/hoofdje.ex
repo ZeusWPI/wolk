@@ -3,7 +3,7 @@ defmodule Wolk.Hoofdje do
   import Ecto.Changeset
 
   schema "hoofdjes" do
-    has_one :claimer, User
+    belongs_to :claimer, User
     many_to_many :kiekjes, Kiekje, join_through: "hoofdjes_kiekjes"
   end
 
