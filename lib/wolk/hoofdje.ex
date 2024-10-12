@@ -3,14 +3,13 @@ defmodule Wolk.Hoofdje do
   import Ecto.Changeset
 
   schema "hoofdjes" do
-    has_one :user, User
-    has_one :profile, Kiekje
+    has_one :claimer, User
     many_to_many :kiekjes, Kiekje, join_through: "hoofdjes_kiekjes"
   end
 
   def changeset(hoofdje, attrs) do
     hoofdje
     |> cast(attrs, [])
-    |> validate_required([:profile])
+    |> validate_required([:claimer])
   end
 end
