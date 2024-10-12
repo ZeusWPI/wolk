@@ -18,8 +18,6 @@ defmodule WolkWeb.Router do
   scope "/", WolkWeb do
     pipe_through :browser
 
-    live "/svelte", SvelteLive
-
     get "/", PageController, :home
   end
 
@@ -34,7 +32,7 @@ defmodule WolkWeb.Router do
   scope "/albums", WolkWeb do
     pipe_through :browser
 
-    resources "/", AlbumController, only: [:index]
+    live "/", AlbumLive
   end
 
   scope "/hoofdjes", WolkWeb do

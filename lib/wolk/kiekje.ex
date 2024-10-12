@@ -11,7 +11,6 @@ defmodule Wolk.Kiekje do
     timestamps(type: :utc_datetime)
   end
 
-  @doc false
   def changeset(kiekje, attrs) do
     kiekje
     |> cast(attrs, [:name])

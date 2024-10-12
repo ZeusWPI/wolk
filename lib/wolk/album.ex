@@ -1,4 +1,6 @@
 defmodule Wolk.Album do
+  alias Wolk.Repo
+  alias Wolk.Album
   alias Wolk.Kiekje
   use Ecto.Schema
   import Ecto.Changeset
@@ -10,10 +12,14 @@ defmodule Wolk.Album do
     timestamps(type: :utc_datetime)
   end
 
-  @doc false
   def changeset(album, attrs) do
     album
     |> cast(attrs, [:name])
     |> validate_required([:name])
+  end
+
+  def create_album(attrs) do
+    Album.changeset(%Album{}, attrs)
+    |> Repo.insert()
   end
 end
