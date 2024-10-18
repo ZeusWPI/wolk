@@ -1,12 +1,12 @@
-<main class="px-4 mb-20 sm:px-6 lg:px-8">
+<main class="px-4 py-2 mb-20 sm:px-6 lg:px-8">
   <div class="mx-auto container">
     <.flash_group flash={@flash} />
     <%= @inner_content %>
   </div>
 </main>
 <%= if @user != nil do %>
-  <.svelte name="nav/BottomBar" props={%{user: @user}} } />
+  <.svelte name="nav/BottomBar" props={%{user: @user}} />
 <% end %>
 <%= if assigns != nil do %>
-  <.svelte name="nav/BottomBar" props={%{user: assigns[:user]}} } />
+  <.svelte name="nav/BottomBar" props={%{user: assigns[:user]}} />
 <% end %>

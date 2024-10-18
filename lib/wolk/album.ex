@@ -5,6 +5,8 @@ defmodule Wolk.Album do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @derive {Jason.Encoder, only: [:name, :id]}
+
   schema "albums" do
     field :name, :string
     many_to_many :kiekjes, Kiekje, join_through: "albums_kiekjes"

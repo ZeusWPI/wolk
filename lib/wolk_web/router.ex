@@ -1,4 +1,5 @@
 defmodule WolkWeb.Router do
+  alias WolkWeb.AlbumLive
   use WolkWeb, :router
 
   pipeline :browser do
@@ -30,10 +31,11 @@ defmodule WolkWeb.Router do
   end
 
   live_session :default, on_mount: WolkWeb.UserLiveAuth do
-    scope "/albums", WolkWeb do
+    scope "/albums", WolkWeb.AlbumLive do
       pipe_through :browser
 
-      live "/", AlbumLive
+      live "/", Index, :index
+      live "/:id", Show, :show
     end
 
     scope "/hoofdjes", WolkWeb do
