@@ -1,5 +1,5 @@
 <script>
-  import Button from "$lib/ui/Button.svelte";
+  import Button from "$components/ui/Button.svelte";
   import { HeadCircuit, Image, Images, SignIn, SignOut } from "phosphor-svelte";
 
   export let user;

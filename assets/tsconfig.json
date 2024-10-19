@@ -8,8 +8,11 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "$lib/*": [
+      "$components/*": [
         "svelte/*"
+      ],
+      "$lib/*": [
+        "lib/*"
       ]
     }
   }

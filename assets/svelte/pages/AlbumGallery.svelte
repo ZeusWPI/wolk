@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Plus } from "phosphor-svelte";
-  import Button from "$lib/ui/Button.svelte";
-  import Input from "$lib/ui/Input.svelte";
+  import Button from "$components/ui/Button.svelte";
+  import Input from "$components/ui/Input.svelte";
   import type { Live } from "live_svelte";
 
   export let live: Live;
