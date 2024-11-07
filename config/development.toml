@@ -1,0 +1,17 @@
+[server]
+port = 8000
+
+[app]
+dsn = ""
+host = "http://localhost:3000"
+
+[storage.minio]
+endpoint="localhost:9000"
+username="miniorootuser"
+password="password"
+bucket="wolk"
+
+[auth.zauth]
+client_id="tomtest"
+client_secret="blargh"
+callbackURL="http://localhost:3000/api/auth/callback/zauth"
