@@ -61,3 +61,7 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :ueberauth, Ueberauth.Strategy.Zauth.OAuth,
+  client_id: "tomtest",
+  client_secret: "blargh"

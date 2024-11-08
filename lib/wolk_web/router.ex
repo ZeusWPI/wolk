@@ -3,10 +3,28 @@ defmodule WolkWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug WolkWeb.Plugs.SetUser
+  end
+
+  pipeline :auth_api do
+    plug :accepts, ["json"]
+    plug :fetch_session
+    plug WolkWeb.Plugs.SetUser
+    plug WolkWeb.Plugs.RequireAuth
   end
 
   scope "/api", WolkWeb do
-    pipe_through :api
+    pipe_through :auth_api
+
+    scope "/auth" do
+      get "/logout", AuthController, :signout
+    end
+  end
+
+  scope "/api/auth", WolkWeb do
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
   end
 
   # Enable LiveDashboard in development
