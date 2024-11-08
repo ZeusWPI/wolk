@@ -17,12 +17,18 @@ defmodule WolkWeb.Router do
   scope "/api", WolkWeb do
     pipe_through :auth_api
 
+    scope "/users" do
+      get "/me", UserController, :me
+    end
+
     scope "/auth" do
       get "/logout", AuthController, :signout
     end
   end
 
   scope "/api/auth", WolkWeb do
+    pipe_through :api
+
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
   end

@@ -31,6 +31,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :ueberauth, Ueberauth,
+  base_path: "/api/auth",
   providers: [
     zauth: {Ueberauth.Strategy.Zauth, [default_scope: ""]}
   ]

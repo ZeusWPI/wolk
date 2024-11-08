@@ -12,13 +12,11 @@ defmodule WolkWeb.AuthController do
     case Accounts.find_or_create_user(user_data) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Welcome back!")
         |> put_session(:user_id, user.id)
         |> redirect(to: "/")
 
       {:error, _} ->
         conn
-        |> put_flash(:error, "Something went wrong")
         |> redirect(to: "/")
     end
   end
