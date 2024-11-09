@@ -11,7 +11,8 @@
 				throw new Error('Failed to fetch user info');
 			}
 			return (await resp.json())?.data;
-		}
+		},
+		refetchOnWindowFocus: false
 	});
 </script>
 
