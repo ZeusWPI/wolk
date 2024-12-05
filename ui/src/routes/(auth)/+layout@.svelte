@@ -1,7 +1,9 @@
 <script lang="ts">
 	import Navbar from '$lib/components/Navbar.svelte';
-	import { createQuery } from '@tanstack/svelte-query';
+	import { setUserContext } from '$lib/context/user';
 	import type { User } from '$lib/types';
+	import { createQuery } from '@tanstack/svelte-query';
+	let { children } = $props();
 
 	const authQuery = createQuery<User>({
 		queryKey: ['auth', 'user'],
@@ -11,18 +13,21 @@
 				throw new Error('Failed to fetch user info');
 			}
 			return (await resp.json())?.data;
-		}
+		},
+		refetchOnWindowFocus: false
 	});
+
+	setUserContext(authQuery);
 </script>
 
 <main class="mb-20 px-4 py-2 sm:px-6 lg:px-8">
 	<div class="container mx-auto">
 		{#if $authQuery.isLoading}
-			<p>Loading...</p>
+			<p>Loading session...</p>
 		{:else if $authQuery.isError}
-			<p>Error: {$authQuery.error.message}</p>
+			<p>Auth error: {$authQuery.error.message}</p>
 		{:else if $authQuery.isSuccess}
-			<slot props={{ user: $authQuery.data }} />
+			{@render children()}
 		{/if}
 	</div>
 </main>

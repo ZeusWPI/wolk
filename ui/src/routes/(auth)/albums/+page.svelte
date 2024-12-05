@@ -3,11 +3,12 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import { Album, PlusIcon } from 'lucide-svelte';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import AlbumForm from '$lib/forms/AlbumForm.svelte';
+	import AlbumForm from '$lib/components/forms/AlbumForm.svelte';
+	import type { PageData } from './$types';
+	import { getUserContext } from '$lib/context/user';
 
-	/** @type {RoutifyContext} */
-	export let context;
-	const isAdmin = context.allProps.user?.admin ?? false;
+	export const ssr = false;
+	let { data }: { data: PageData } = $props();
 
 	let albumQuery = createQuery<Album[]>({
 		queryKey: ['albums'],
@@ -19,6 +20,12 @@
 			return resp.json();
 		}
 	});
+
+	const query = getUserContext();
+
+	let isAdmin = $derived.by(() => {
+		return $query.data?.admin ?? false;
+	});
 </script>
 
 <div class="align-center flex justify-between">
@@ -28,9 +35,9 @@
 			<Dialog.Trigger><Button><PlusIcon /> Create</Button></Dialog.Trigger>
 			<Dialog.Content>
 				<Dialog.Header>
-					<Dialog.Title>Create new Album</Dialog.Title>
+					<Dialog.Title>Create new album</Dialog.Title>
 					<Dialog.Description>
-						<AlbumForm />
+						<AlbumForm data={data.form} submit={(d) => console.log(d)} />
 					</Dialog.Description>
 				</Dialog.Header>
 			</Dialog.Content>

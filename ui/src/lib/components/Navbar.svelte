@@ -6,7 +6,7 @@
 		LogInIcon,
 		LogOutIcon
 	} from 'lucide-svelte';
-	import { Button } from './ui/button';
+	import { Button } from '$lib/components/ui/button';
 
 	export let name: string | undefined = undefined;
 </script>

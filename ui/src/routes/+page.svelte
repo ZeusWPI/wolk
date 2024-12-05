@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Navbar from '$lib/components/Navbar.svelte';
-	import { createQuery } from '@tanstack/svelte-query';
 	import type { User } from '$lib/types';
+	import { createQuery } from '@tanstack/svelte-query';
 
 	const authQuery = createQuery<User>({
 		queryKey: ['auth', 'user'],
@@ -18,7 +18,7 @@
 
 <main class="mb-20 px-4 py-2 sm:px-6 lg:px-8">
 	<div class="container mx-auto">
-		<slot />
+		<h1>Wolk</h1>
 	</div>
 </main>
 <Navbar name={$authQuery.data?.name} />
