@@ -22,7 +22,7 @@
 		{:else if $authQuery.isError}
 			<p>Error: {$authQuery.error.message}</p>
 		{:else if $authQuery.isSuccess}
-			<slot user={$authQuery.data} />
+			<slot props={{ user: $authQuery.data }} />
 		{/if}
 	</div>
 </main>
