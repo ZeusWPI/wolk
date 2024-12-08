@@ -16,19 +16,19 @@
 >
 	<div class="flex items-center gap-2">
 		<a href="/albums">
-			<Button variant="secondary">
+			<Button variant="secondary" class="gap-2">
 				<GalleryVerticalEndIcon class="h-4 w-4" />
 				<span>Albums</span>
 			</Button>
 		</a>
 		<a href="/kiekjes">
-			<Button variant="secondary">
+			<Button variant="secondary" class="gap-2">
 				<ImageIcon class="h-4 w-4" />
 				<span>Kiekjes</span>
 			</Button>
 		</a>
 		<a href="/hoofdjes">
-			<Button variant="secondary">
+			<Button variant="secondary" class="gap-2">
 				<BabyIcon class="h-4 w-4" />
 				<span>Hoofdjes</span>
 			</Button>
@@ -38,7 +38,7 @@
 		<div class="flex items-center gap-2">
 			<p class="text-lg font-semibold">{name}</p>
 			<a href="/api/auth/logout" target="_self">
-				<Button variant="secondary">
+				<Button variant="secondary" class="gap-2">
 					<LogOutIcon class="h-4 w-4" />
 					<span>Logout</span>
 				</Button>
@@ -46,7 +46,7 @@
 		</div>
 	{:else}
 		<a href="/api/auth/zauth" target="_self">
-			<Button variant="secondary">
+			<Button variant="secondary" class="gap-2">
 				<LogInIcon class="h-4 w-4" />
 				<span>Login</span>
 			</Button>

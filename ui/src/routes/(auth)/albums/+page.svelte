@@ -6,11 +6,13 @@
 	import AlbumForm from '$lib/components/forms/AlbumForm.svelte';
 	import type { PageData } from './$types';
 	import { getUserContext } from '$lib/context/user';
+	import { queryClient } from '$lib/query';
+	import { toast } from 'svelte-sonner';
 
 	export const ssr = false;
 	let { data }: { data: PageData } = $props();
 
-	let albumQuery = createQuery<Album[]>({
+	let albumQuery = createQuery<{ data: Album[] }>({
 		queryKey: ['albums'],
 		queryFn: async () => {
 			const resp = await fetch('/api/albums');
@@ -26,10 +28,26 @@
 	let isAdmin = $derived.by(() => {
 		return $query.data?.admin ?? false;
 	});
+
+	const createNewAlbum = async (name: string) => {
+		const resp = await fetch('/api/albums', {
+			method: 'POST',
+			body: JSON.stringify({ album: { name } }),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		if (!resp.ok) {
+			toast.error('Failed to create album');
+			return;
+		}
+		toast.success('Album created!');
+		queryClient.invalidateQueries({ queryKey: ['albums'] });
+	};
 </script>
 
 <div class="align-center flex justify-between">
-	<h1>Albums</h1>
+	<h1 class="text-2xl font-semibold">Albums</h1>
 	{#if isAdmin}
 		<Dialog.Root>
 			<Dialog.Trigger><Button><PlusIcon /> Create</Button></Dialog.Trigger>
@@ -37,7 +55,7 @@
 				<Dialog.Header>
 					<Dialog.Title>Create new album</Dialog.Title>
 					<Dialog.Description>
-						<AlbumForm data={data.form} submit={(d) => console.log(d)} />
+						<AlbumForm data={data.form} submit={(d) => createNewAlbum(d.name)} />
 					</Dialog.Description>
 				</Dialog.Header>
 			</Dialog.Content>
@@ -50,8 +68,14 @@
 	<p>An error occurred while fetching the albums: {$albumQuery.error.message}</p>
 {:else if $albumQuery.isSuccess}
 	<div>
-		{#each $albumQuery.data as album}
-			<a href={`/albums/${album.id}`}>{album.name}</a>
+		{#each $albumQuery.data.data as album}
+			<a href={`/albums/${album.id}`}>
+				<div
+					class="h-40 w-40 cursor-pointer rounded bg-gradient-to-b from-black/15 to-50% shadow-lg"
+				>
+					<p class="white font-sm p-2">{album.name}</p>
+				</div>
+			</a>
 		{/each}
 	</div>
 {/if}

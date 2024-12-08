@@ -54,6 +54,9 @@ importers:
       globals:
         specifier: ^15.0.0
         version: 15.12.0
+      mode-watcher:
+        specifier: ^0.5.0
+        version: 0.5.0(svelte@5.1.12)
       prettier:
         specifier: ^3.3.2
         version: 3.3.3
@@ -69,6 +72,9 @@ importers:
       svelte-check:
         specifier: ^4.0.5
         version: 4.0.5(svelte@5.1.12)(typescript@5.6.3)
+      svelte-sonner:
+        specifier: ^0.3.28
+        version: 0.3.28(svelte@5.1.12)
       sveltekit-superforms:
         specifier: ^2.20.0
         version: 2.20.0(@sveltejs/kit@2.9.0(@sveltejs/vite-plugin-svelte@5.0.1(svelte@5.1.12)(vite@6.0.2(jiti@1.21.6)(yaml@2.6.0)))(svelte@5.1.12)(vite@6.0.2(jiti@1.21.6)(yaml@2.6.0)))(@types/json-schema@7.0.15)(svelte@5.1.12)(typescript@5.6.3)
@@ -1334,6 +1340,11 @@ packages:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
 
+  mode-watcher@0.5.0:
+    resolution: {integrity: sha512-5E6fh/aXhAVv+U+DbeM0hCmskQE9u7WSmvnCRijJB/MJu7HtB73sjiCaZ9n1M8QHmzLrBFo8XBAUcWXkDm8Z9A==}
+    peerDependencies:
+      svelte: ^4.0.0 || ^5.0.0-next.1
+
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
@@ -1725,6 +1736,11 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=7.0.0'}
     peerDependencies:
       svelte: ^5.0.0
+
+  svelte-sonner@0.3.28:
+    resolution: {integrity: sha512-K3AmlySeFifF/cKgsYNv5uXqMVNln0NBAacOYgmkQStLa/UoU0LhfAACU6Gr+YYC8bOCHdVmFNoKuDbMEsppJg==}
+    peerDependencies:
+      svelte: ^3.0.0 || ^4.0.0 || ^5.0.0-next.1
 
   svelte-toolbelt@0.4.6:
     resolution: {integrity: sha512-k8OUvXBUifHZcAlWeY/HLg/4J0v5m2iOfOhn8fDmjt4AP8ZluaDh9eBFus9lFiLX6O5l6vKqI1dKL5wy7090NQ==}
@@ -3096,6 +3112,10 @@ snapshots:
 
   minipass@7.1.2: {}
 
+  mode-watcher@0.5.0(svelte@5.1.12):
+    dependencies:
+      svelte: 5.1.12
+
   mri@1.2.0: {}
 
   mrmime@2.0.0: {}
@@ -3409,6 +3429,10 @@ snapshots:
       svelte: 5.1.12
 
   svelte-radix@2.0.1(svelte@5.1.12):
+    dependencies:
+      svelte: 5.1.12
+
+  svelte-sonner@0.3.28(svelte@5.1.12):
     dependencies:
       svelte: 5.1.12
 
