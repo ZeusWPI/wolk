@@ -9,7 +9,6 @@
 	import { queryClient } from '$lib/query';
 	import { toast } from 'svelte-sonner';
 
-	export const ssr = false;
 	let { data }: { data: PageData } = $props();
 
 	let albumQuery = createQuery<{ data: Album[] }>({
