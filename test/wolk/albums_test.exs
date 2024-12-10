@@ -56,4 +56,59 @@ defmodule Wolk.AlbumsTest do
       assert %Ecto.Changeset{} = Albums.change_album(album)
     end
   end
+
+  describe "kiekje" do
+    alias Wolk.Albums.Kiekje
+
+    import Wolk.AlbumsFixtures
+
+    @invalid_attrs %{name: nil}
+
+    test "list_kiekje/0 returns all kiekje" do
+      kiekje = kiekje_fixture()
+      assert Albums.list_kiekje() == [kiekje]
+    end
+
+    test "get_kiekje!/1 returns the kiekje with given id" do
+      kiekje = kiekje_fixture()
+      assert Albums.get_kiekje!(kiekje.id) == kiekje
+    end
+
+    test "create_kiekje/1 with valid data creates a kiekje" do
+      valid_attrs = %{name: "some name", image: "some image"}
+
+      assert {:ok, %Kiekje{} = kiekje} = Albums.create_kiekje(valid_attrs)
+      assert kiekje.name == "some name"
+      assert kiekje.image == "some image"
+    end
+
+    test "create_kiekje/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Albums.create_kiekje(@invalid_attrs)
+    end
+
+    test "update_kiekje/2 with valid data updates the kiekje" do
+      kiekje = kiekje_fixture()
+      update_attrs = %{name: "some updated name"}
+
+      assert {:ok, %Kiekje{} = kiekje} = Albums.update_kiekje(kiekje, update_attrs)
+      assert kiekje.name == "some updated name"
+    end
+
+    test "update_kiekje/2 with invalid data returns error changeset" do
+      kiekje = kiekje_fixture()
+      assert {:error, %Ecto.Changeset{}} = Albums.update_kiekje(kiekje, @invalid_attrs)
+      assert kiekje == Albums.get_kiekje!(kiekje.id)
+    end
+
+    test "delete_kiekje/1 deletes the kiekje" do
+      kiekje = kiekje_fixture()
+      assert {:ok, %Kiekje{}} = Albums.delete_kiekje(kiekje)
+      assert_raise Ecto.NoResultsError, fn -> Albums.get_kiekje!(kiekje.id) end
+    end
+
+    test "change_kiekje/1 returns a kiekje changeset" do
+      kiekje = kiekje_fixture()
+      assert %Ecto.Changeset{} = Albums.change_kiekje(kiekje)
+    end
+  end
 end

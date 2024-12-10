@@ -4,6 +4,7 @@ defmodule Wolk.Albums.Album do
 
   schema "albums" do
     field :name, :string
+    many_to_many :kiekjes, Kiekje, join_through: "albums_kiekjes"
 
     timestamps(type: :utc_datetime)
   end

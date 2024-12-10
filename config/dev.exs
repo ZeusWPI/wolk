@@ -65,3 +65,5 @@ config :phoenix, :plug_init_mode, :runtime
 config :ueberauth, Ueberauth.Strategy.Zauth.OAuth,
   client_id: "tomtest",
   client_secret: "blargh"
+
+config :waffle, storage: Waffle.Storage.Local

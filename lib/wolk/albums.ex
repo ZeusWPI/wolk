@@ -101,4 +101,100 @@ defmodule Wolk.Albums do
   def change_album(%Album{} = album, attrs \\ %{}) do
     Album.changeset(album, attrs)
   end
+
+  alias Wolk.Albums.Kiekje
+
+  @doc """
+  Returns the list of kiekje.
+
+  ## Examples
+
+      iex> list_kiekje()
+      [%Kiekje{}, ...]
+
+  """
+  def list_kiekje do
+    Repo.all(Kiekje)
+  end
+
+  @doc """
+  Gets a single kiekje.
+
+  Raises `Ecto.NoResultsError` if the Kiekje does not exist.
+
+  ## Examples
+
+      iex> get_kiekje!(123)
+      %Kiekje{}
+
+      iex> get_kiekje!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_kiekje!(id), do: Repo.get!(Kiekje, id)
+
+  @doc """
+  Creates a kiekje.
+
+  ## Examples
+
+      iex> create_kiekje(%{field: value})
+      {:ok, %Kiekje{}}
+
+      iex> create_kiekje(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_kiekje(attrs \\ %{}) do
+    %Kiekje{}
+    |> Kiekje.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a kiekje.
+
+  ## Examples
+
+      iex> update_kiekje(kiekje, %{field: new_value})
+      {:ok, %Kiekje{}}
+
+      iex> update_kiekje(kiekje, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_kiekje(%Kiekje{} = kiekje, attrs) do
+    kiekje
+    |> Kiekje.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a kiekje.
+
+  ## Examples
+
+      iex> delete_kiekje(kiekje)
+      {:ok, %Kiekje{}}
+
+      iex> delete_kiekje(kiekje)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_kiekje(%Kiekje{} = kiekje) do
+    Repo.delete(kiekje)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking kiekje changes.
+
+  ## Examples
+
+      iex> change_kiekje(kiekje)
+      %Ecto.Changeset{data: %Kiekje{}}
+
+  """
+  def change_kiekje(%Kiekje{} = kiekje, attrs \\ %{}) do
+    Kiekje.changeset(kiekje, attrs)
+  end
 end

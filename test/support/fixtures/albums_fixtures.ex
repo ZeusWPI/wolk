@@ -17,4 +17,19 @@ defmodule Wolk.AlbumsFixtures do
 
     album
   end
+
+  @doc """
+  Generate a kiekje.
+  """
+  def kiekje_fixture(attrs \\ %{}) do
+    {:ok, kiekje} =
+      attrs
+      |> Enum.into(%{
+        name: "some name",
+        image: "some image"
+      })
+      |> Wolk.Albums.create_kiekje()
+
+    kiekje
+  end
 end
