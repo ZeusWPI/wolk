@@ -11,11 +11,12 @@ defmodule WolkWeb.KiekjeController do
     render(conn, :index, kiekje: kiekje)
   end
 
-  def create(conn, %{"kiekje" => kiekje_params}) do
+  def create(conn, kiekje_params) do
+    kiekje_params = Map.put(kiekje_params, "uploaded_by", conn.assigns.user.name)
+
     with {:ok, %Kiekje{} = kiekje} <- Albums.create_kiekje(kiekje_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/kiekje/#{kiekje}")
       |> render(:show, kiekje: kiekje)
     end
   end

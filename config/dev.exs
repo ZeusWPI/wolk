@@ -66,4 +66,17 @@ config :ueberauth, Ueberauth.Strategy.Zauth.OAuth,
   client_id: "tomtest",
   client_secret: "blargh"
 
-config :waffle, storage: Waffle.Storage.Local
+config :waffle,
+  storage: Waffle.Storage.S3,
+  bucket: "wolk",
+  asset_host: "http://localhost:9000/wolk"
+
+config :ex_aws,
+  json_codec: Jason,
+  access_key_id: "miniorootuser",
+  secret_access_key: "password",
+  s3: [
+    scheme: "http://",
+    host: "localhost",
+    port: "9000"
+  ]

@@ -25,19 +25,22 @@ defmodule WolkWeb.AlbumController do
     render(conn, :show, album: album)
   end
 
-  def update(conn, %{"id" => id, "album" => album_params}) do
-    album = Albums.get_album!(id)
-
-    with {:ok, %Album{} = album} <- Albums.update_album(album, album_params) do
-      render(conn, :show, album: album)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     album = Albums.get_album!(id)
 
     with {:ok, %Album{}} <- Albums.delete_album(album) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  def link_kiekje(conn, %{"id" => id, "kiekje_id" => kiekje_id}) do
+    album = Albums.get_album!(id)
+    kiekje = Albums.get_kiekje!(kiekje_id)
+
+    with {:ok, %Album{} = album} <- Albums.link_kiekje(album, kiekje) do
+      conn
+      |> put_status(:created)
+      |> render(:show, album: album)
     end
   end
 end

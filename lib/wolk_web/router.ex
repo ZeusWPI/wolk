@@ -18,6 +18,11 @@ defmodule WolkWeb.Router do
     pipe_through :auth_api
 
     resources "/albums", AlbumController, except: [:new, :edit]
+    resources "/kiekje", KiekjeController, except: [:new, :edit]
+
+    scope "/albums" do
+      post "/:id/add", AlbumController, :link_kiekje
+    end
 
     scope "/users" do
       get "/me", UserController, :me

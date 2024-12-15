@@ -18,7 +18,8 @@ defmodule WolkWeb.KiekjeJSON do
   defp data(%Kiekje{} = kiekje) do
     %{
       id: kiekje.id,
-      name: kiekje.name
+      uploaded_by: kiekje.uploaded_by,
+      thumbnail_url: Wolk.KiekjeImage.url({kiekje.image, kiekje}, :thumb)
     }
   end
 end

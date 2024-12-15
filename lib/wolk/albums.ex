@@ -146,9 +146,14 @@ defmodule Wolk.Albums do
 
   """
   def create_kiekje(attrs \\ %{}) do
-    %Kiekje{}
-    |> Kiekje.changeset(attrs)
-    |> Repo.insert()
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:kiekje, Kiekje.changeset(%Kiekje{}, attrs))
+    |> Ecto.Multi.update(:kiekje_with_image, &Kiekje.image_changeset(&1.kiekje, attrs))
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{kiekje_with_image: kiekje}} -> {:ok, kiekje}
+      {:error, _, changeset, _} -> {:error, changeset}
+    end
   end
 
   @doc """
@@ -166,6 +171,7 @@ defmodule Wolk.Albums do
   def update_kiekje(%Kiekje{} = kiekje, attrs) do
     kiekje
     |> Kiekje.changeset(attrs)
+    |> Kiekje.image_changeset(attrs)
     |> Repo.update()
   end
 
@@ -195,6 +201,8 @@ defmodule Wolk.Albums do
 
   """
   def change_kiekje(%Kiekje{} = kiekje, attrs \\ %{}) do
-    Kiekje.changeset(kiekje, attrs)
+    kiekje
+    |> Kiekje.changeset(attrs)
+    |> Kiekje.image_changeset(attrs)
   end
 end

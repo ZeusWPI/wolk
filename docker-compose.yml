@@ -16,6 +16,11 @@ services:
     environment:
       MINIO_ROOT_USER: miniorootuser
       MINIO_ROOT_PASSWORD: password
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - minio_data:/data
     ports:
@@ -25,7 +30,8 @@ services:
   createbuckets:
     image: minio/mc
     depends_on:
-      - minio
+      minio:
+        condition: service_healthy
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc config host add myminio http://minio:9000 miniorootuser password;

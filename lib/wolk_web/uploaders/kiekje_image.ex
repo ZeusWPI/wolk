@@ -3,8 +3,9 @@ defmodule Wolk.KiekjeImage do
   use Waffle.Ecto.Definition
 
   # To add a thumbnail version:
-  # @versions [:original, :thumb]
-  @versions [:original]
+  @versions [:original, :thumb]
+
+  def acl(_, _), do: :public_read
 
   # Override the bucket on a per definition basis:
   def bucket do
@@ -26,19 +27,19 @@ defmodule Wolk.KiekjeImage do
   end
 
   # Define a thumbnail transformation:
-  # def transform(:thumb, _) do
-  #   {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
-  # end
+  def transform(:thumb, _) do
+    {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
+  end
 
   # Override the persisted filenames:
-  # def filename(version, _) do
-  #   version
-  # end
+  def filename(version, {file, _scope}) do
+    "#{version}_#{file.file_name |> Path.basename() |> Path.rootname()}"
+  end
 
   # Override the storage directory:
-  # def storage_dir(version, {file, scope}) do
-  #   "uploads/user/avatars/#{scope.id}"
-  # end
+  def storage_dir(_version, {_file, scope}) do
+    "kiekjes/#{scope.id}"
+  end
 
   # Provide a default URL if there hasn't been a file uploaded
   # def default_url(version, scope) do

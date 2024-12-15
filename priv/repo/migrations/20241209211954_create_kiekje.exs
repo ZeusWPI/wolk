@@ -2,9 +2,9 @@ defmodule Wolk.Repo.Migrations.CreateKiekje do
   use Ecto.Migration
 
   def change do
-    create table(:kiekje) do
-      add :name, :string
+    create table(:kiekjes) do
       add :image, :string
+      add :uploaded_by, :string
 
       timestamps(type: :utc_datetime)
     end

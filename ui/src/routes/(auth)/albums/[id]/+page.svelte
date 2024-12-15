@@ -7,17 +7,52 @@
 
 	let pictures = $state<FileList>();
 
-	const uploadPictures = () => {
+	const uploadPictures = async () => {
 		if (!pictures) return;
-		const formData = new FormData();
-		for (let i = 0; i < pictures.length; i++) {
-			const picture = pictures[i];
-			formData.append('pictures', picture);
-		}
-		fetch(`/api/albums/${$page.params.id}/pictures`, {
-			method: 'POST',
-			body: formData
+
+		const kiekjes = await Promise.allSettled<{ data: { id: string } }>(
+			new Array(pictures.length).fill(0).map(async (_, i) => {
+				const formData = new FormData();
+				formData.append('image', pictures![i]);
+				const resp = await fetch('/api/kiekje', {
+					method: 'POST',
+					body: formData
+				});
+				if (!resp.ok) {
+					throw new Error('Failed to upload image');
+				}
+				return resp.json();
+			})
+		);
+
+		const failedFiles: File[] = [];
+		kiekjes.forEach((kiekje, i) => {
+			if (kiekje.status === 'rejected') {
+				failedFiles.push(pictures![i]);
+			}
 		});
+
+		const kiekjeIds = kiekjes.filter((k) => k.status == 'fulfilled').map((k) => k.value.data.id);
+
+		if (kiekjeIds.length == 0) {
+			return;
+		}
+
+		const resp = await fetch(`/api/albums/${$page.params.id}/add`, {
+			method: 'POST',
+			body: JSON.stringify({
+				data: {
+					kiekjes: kiekjeIds
+				}
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+		if (!resp.ok) {
+			console.error('Failed to add kiekjes to album');
+		}
 	};
 </script>
 
