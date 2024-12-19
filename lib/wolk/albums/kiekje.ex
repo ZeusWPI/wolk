@@ -6,7 +6,7 @@ defmodule Wolk.Albums.Kiekje do
   schema "kiekjes" do
     field :uploaded_by, :string
     field :image, Wolk.KiekjeImage.Type
-    many_to_many :albums, Wolk.Albums.Album, join_through: "albums_kiekjes"
+    many_to_many :albums, Wolk.Albums.Album, join_through: "album_kiekjes"
 
     timestamps(type: :utc_datetime)
   end

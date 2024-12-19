@@ -38,6 +38,24 @@ defmodule Wolk.Albums do
   def get_album!(id), do: Repo.get!(Album, id)
 
   @doc """
+  Gets a single album with a the kiekjes associations loaded
+
+  Raises `Ecto.NoResultsError` if the Album does not exist.
+
+  ## Examples
+
+      iex> get_album_with_kiekjes!(123)
+      %Album{}
+
+      iex> get_album_with_kiekjes!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_album_with_kiekjes!(id) do
+    Repo.get!(Album, id) |> Repo.preload(:kiekjes)
+  end
+
+  @doc """
   Creates a album.
 
   ## Examples
@@ -67,6 +85,14 @@ defmodule Wolk.Albums do
       {:error, %Ecto.Changeset{}}
 
   """
+
+  def update_album(%Album{} = album, %{"kiekjes" => kiekjes} = attrs) do
+    album
+    |> Album.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:kiekjes, kiekjes |> Enum.map(&Ecto.Changeset.change/1))
+    |> Repo.update()
+  end
+
   def update_album(%Album{} = album, attrs) do
     album
     |> Album.changeset(attrs)
@@ -116,6 +142,20 @@ defmodule Wolk.Albums do
   def list_kiekje do
     Repo.all(Kiekje)
   end
+
+  @doc """
+  Gets a potential single kiekje.
+
+  ## Examples
+
+      iex> get_kiekje(123)
+      %Kiekje{}
+
+      iex> get_kiekje(456)
+      ** nil
+
+  """
+  def get_kiekje(id), do: Repo.get(Kiekje, id)
 
   @doc """
   Gets a single kiekje.

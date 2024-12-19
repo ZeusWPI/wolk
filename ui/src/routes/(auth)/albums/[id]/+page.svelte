@@ -41,9 +41,7 @@
 		const resp = await fetch(`/api/albums/${$page.params.id}/add`, {
 			method: 'POST',
 			body: JSON.stringify({
-				data: {
-					kiekjes: kiekjeIds
-				}
+				kiekjes: kiekjeIds
 			}),
 			headers: {
 				'Content-Type': 'application/json'
