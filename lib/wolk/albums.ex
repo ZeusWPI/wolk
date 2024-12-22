@@ -173,6 +173,28 @@ defmodule Wolk.Albums do
   """
   def get_kiekje!(id), do: Repo.get!(Kiekje, id)
 
+  @doc false
+  def get_kiekje_between_dates(album_id, start_date, end_date) do
+    start_date = DateTime.new!(start_date, Time.new!(0, 0, 0))
+    end_date = DateTime.new!(end_date, Time.new!(0, 0, 0))
+
+    album_id =
+      case album_id do
+        id when is_integer(id) -> id
+        id when is_binary(id) -> String.to_integer(id)
+      end
+
+    Repo.all(
+      from(k in Kiekje,
+        join: ak in "album_kiekjes",
+        on: k.id == ak.kiekje_id,
+        where:
+          ak.album_id == ^album_id and ^start_date <= k.inserted_at and k.inserted_at < ^end_date,
+        select: k
+      )
+    )
+  end
+
   @doc """
   Creates a kiekje.
 

@@ -7,6 +7,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import LoadingSpinner from '$lib/components/LoadingSpinner.svelte';
 	import ErrorView from '$lib/components/ErrorView.svelte';
+	import PhotoGrid from '$lib/components/photos/PhotoGrid.svelte';
 
 	let albumId = $derived($page.params.id);
 
@@ -44,6 +45,7 @@
 			</Dialog.Content>
 		</Dialog.Root>
 	</div>
+	<PhotoGrid {albumId} />
 {:else if $albumDataQuery.isError}
 	<ErrorView error={$albumDataQuery.error} />
 {:else}

@@ -6,7 +6,9 @@
 	let { children } = $props();
 </script>
 
-<QueryClientProvider client={queryClient}>
+<svelte:head>
+	<title>Wolk - Zeus WPI</title>
+</svelte:head><QueryClientProvider client={queryClient}>
 	<Toaster richColors />
 	{@render children()}
 </QueryClientProvider>

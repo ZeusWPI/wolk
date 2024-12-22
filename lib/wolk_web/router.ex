@@ -22,6 +22,8 @@ defmodule WolkWeb.Router do
 
     scope "/albums" do
       post "/:id/add", AlbumController, :link_kiekje
+      get "/:id/active_months", AlbumController, :get_active_months
+      get "/:id/:date", AlbumController, :get_month_kiekjes
     end
 
     scope "/users" do

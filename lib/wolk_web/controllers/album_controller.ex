@@ -45,4 +45,34 @@ defmodule WolkWeb.AlbumController do
       |> render(:show, album: album)
     end
   end
+
+  def get_active_months(conn, %{"id" => id}) do
+    album = Albums.get_album_with_kiekjes!(id)
+
+    active_months =
+      album.kiekjes
+      |> Enum.map(& &1.inserted_at)
+      |> Enum.map(fn x -> "#{x.month}-#{x.year}" end)
+      |> Enum.uniq()
+
+    render(conn, :show, active_months: active_months)
+  end
+
+  def get_month_kiekjes(conn, %{"id" => id, "date" => date}) do
+    splitted_date = String.split(date, "-") |> Enum.map(&String.to_integer/1)
+
+    case splitted_date do
+      [month, year] ->
+        start_date = Date.new!(year, month, 1)
+        end_date = Date.shift(start_date, month: 1)
+
+        kiekjes = Albums.get_kiekje_between_dates(id, start_date, end_date)
+
+        render(conn, :show, kiekjes: kiekjes)
+
+      _ ->
+        conn
+        |> send_resp(:bad_request, %{message: "Invalid date format"})
+    end
+  end
 end
