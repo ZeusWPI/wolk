@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Navbar from '$lib/components/Navbar.svelte';
+	import PendingUploads from '$lib/components/PendingUploads.svelte';
 	import { setUserContext } from '$lib/context/user';
 	import type { User } from '$lib/types';
 	import { createQuery } from '@tanstack/svelte-query';
@@ -20,7 +21,7 @@
 	setUserContext(authQuery);
 </script>
 
-<main class="mb-20 px-4 py-2 sm:px-6 lg:px-8">
+<main class="relative h-[calc(100vh-4rem)] px-4 py-2 sm:px-6 lg:px-8">
 	<div class="container mx-auto">
 		{#if $authQuery.isLoading}
 			<p>Loading session...</p>
@@ -30,5 +31,6 @@
 			{@render children()}
 		{/if}
 	</div>
+	<PendingUploads />
 </main>
 <Navbar name={$authQuery.data?.name} />

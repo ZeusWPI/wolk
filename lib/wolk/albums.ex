@@ -157,6 +157,8 @@ defmodule Wolk.Albums do
   """
   def get_kiekje(id), do: Repo.get(Kiekje, id)
 
+  def get_kiekje_with_albums(id), do: Repo.get!(Kiekje, id) |> Repo.preload(:albums)
+
   @doc """
   Gets a single kiekje.
 
@@ -230,6 +232,14 @@ defmodule Wolk.Albums do
       {:error, %Ecto.Changeset{}}
 
   """
+  def update_kiekje(%Kiekje{} = kiekje, %{"albums" => albums} = attrs) do
+    kiekje
+    |> Kiekje.changeset(attrs)
+    |> Kiekje.image_changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:albums, albums |> Enum.map(&Ecto.Changeset.change/1))
+    |> Repo.update()
+  end
+
   def update_kiekje(%Kiekje{} = kiekje, attrs) do
     kiekje
     |> Kiekje.changeset(attrs)

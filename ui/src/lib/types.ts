@@ -14,3 +14,13 @@ export type Kiekje = {
   url: string;
   thumbnail_url: string;
 }
+
+export type Upload = {
+  file: File,
+  status: UploadStatus;
+  progress?: number;
+  albumId?: number;
+  error?: unknown;
+}
+
+export type UploadStatus = "idling" | "uploading" | "uploaded" | "failed"

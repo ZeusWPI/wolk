@@ -8,7 +8,7 @@
 
 	dayjs.extend(customParseFormat);
 
-	const { albumId }: { albumId: string } = $props();
+	const { albumId }: { albumId: number } = $props();
 
 	const activeMonthQuery = createQuery<string[]>({
 		queryKey: ['albums', albumId, 'activeMonth'],
@@ -26,7 +26,7 @@
 	<div>
 		{#each $activeMonthQuery.data as month}
 			<h2 class="text-xl font-bold text-gray-500">
-				{dayjs(month, 'MM-YYYY').format('MMMM YYYY').toUpperCase()}
+				{dayjs(month, 'M-YYYY').format('MMMM YYYY').toUpperCase()}
 			</h2>
 			<LazyPhotoList {albumId} date={month} />
 		{/each}

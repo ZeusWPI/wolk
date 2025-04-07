@@ -9,7 +9,8 @@
 	import ErrorView from '$lib/components/ErrorView.svelte';
 	import PhotoGrid from '$lib/components/photos/PhotoGrid.svelte';
 
-	let albumId = $derived($page.params.id);
+	let uploaderOpen = $state(false);
+	let albumId = $derived(Number($page.params.id));
 
 	const albumDataQuery = createQuery<{ data: { name: string } }>({
 		queryKey: ['album', $page.params.id],
@@ -31,7 +32,7 @@
 			</a>
 			<p class="text-2xl font-semibold">{$albumDataQuery.data.data.name}</p>
 		</div>
-		<Dialog.Root>
+		<Dialog.Root bind:open={uploaderOpen}>
 			<Dialog.Trigger
 				><Button class="gap-2"><LucideUploadCloud size={16} />Upload</Button></Dialog.Trigger
 			>
@@ -39,7 +40,12 @@
 				<Dialog.Header>
 					<Dialog.Title>Upload new kiekjes!</Dialog.Title>
 					<Dialog.Description class="space-y-2">
-						<KiekjesUploader {albumId} />
+						<KiekjesUploader
+							{albumId}
+							afterUpload={() => {
+								uploaderOpen = false;
+							}}
+						/>
 					</Dialog.Description>
 				</Dialog.Header>
 			</Dialog.Content>

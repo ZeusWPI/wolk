@@ -21,7 +21,7 @@ defmodule WolkWeb.Router do
     resources "/kiekje", KiekjeController, except: [:new, :edit]
 
     scope "/albums" do
-      post "/:id/add", AlbumController, :link_kiekje
+      post "/:id/add/:kiekje_id", AlbumController, :link_kiekje
       get "/:id/active_months", AlbumController, :get_active_months
       get "/:id/:date", AlbumController, :get_month_kiekjes
     end

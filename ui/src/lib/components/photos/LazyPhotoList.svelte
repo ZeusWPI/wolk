@@ -5,7 +5,7 @@
 	import type { Kiekje } from '$lib/types';
 	import LazyImage from './LazyImage.svelte';
 
-	const { albumId, date }: { albumId: string; date: string } = $props();
+	const { albumId, date }: { albumId: number; date: string } = $props();
 
 	const photosQuery = createQuery<{ kiekjes: Kiekje[] }>({
 		queryKey: ['albums', albumId, 'photos', date],

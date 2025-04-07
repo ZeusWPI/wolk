@@ -1,6 +1,7 @@
 defmodule WolkWeb.AlbumController do
   use WolkWeb, :controller
 
+  alias Wolk.Albums.Kiekje
   alias Wolk.Albums
   alias Wolk.Albums.Album
 
@@ -33,16 +34,18 @@ defmodule WolkWeb.AlbumController do
     end
   end
 
-  def link_kiekje(conn, %{"id" => id, "kiekjes" => kiekjeIds}) do
-    album = Albums.get_album_with_kiekjes!(id)
-    # Check for each kiekje if it exists & filter the unexisting
-    kiekjes = Enum.map(kiekjeIds, &Albums.get_kiekje(&1)) |> Enum.reject(&is_nil/1)
-    kiekjes = album.kiekjes ++ kiekjes
+  def link_kiekje(conn, %{"id" => id, "kiekje_id" => kiekjeId}) do
+    album = Albums.get_album!(id)
 
-    with {:ok, %Album{} = album} <- Albums.update_album(album, %{"kiekjes" => kiekjes}) do
-      conn
-      |> put_status(:created)
-      |> render(:show, album: album)
+    case Albums.get_kiekje_with_albums(kiekjeId) do
+      nil ->
+        conn |> send_resp(:not_found, "No kiekje found for the given id")
+
+      kiekje ->
+        with {:ok, %Kiekje{}} <-
+               Albums.update_kiekje(kiekje, %{"albums" => [album | kiekje.albums]}) do
+          conn |> send_resp(:created, "Album & kiekje linked!")
+        end
     end
   end
 

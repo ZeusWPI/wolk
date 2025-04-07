@@ -1,56 +1,21 @@
 <script lang="ts">
+	import { addFileUpload, processUploads } from '$lib/context/uploads.svelte';
 	import { Button } from './ui/button';
 	import FileInput from './ui/input/fileInput.svelte';
 
 	let pictures = $state<FileList>();
 
-	let { albumId }: { albumId: string } = $props();
+	let { albumId, afterUpload }: { albumId: number; afterUpload?: () => void } = $props();
 
 	const uploadPictures = async () => {
 		if (!pictures) return;
 
-		const kiekjes = await Promise.allSettled<{ data: { id: string } }>(
-			new Array(pictures.length).fill(0).map(async (_, i) => {
-				const formData = new FormData();
-				formData.append('image', pictures![i]);
-				const resp = await fetch('/api/kiekje', {
-					method: 'POST',
-					body: formData
-				});
-				if (!resp.ok) {
-					throw new Error('Failed to upload image');
-				}
-				return resp.json();
-			})
-		);
-
-		const failedFiles: File[] = [];
-		kiekjes.forEach((kiekje, i) => {
-			if (kiekje.status === 'rejected') {
-				failedFiles.push(pictures![i]);
-			}
-		});
-		console.log(failedFiles);
-
-		const kiekjeIds = kiekjes.filter((k) => k.status == 'fulfilled').map((k) => k.value.data.id);
-
-		if (kiekjeIds.length == 0) {
-			return;
+		for (let i = 0; i < pictures.length; i++) {
+			addFileUpload(pictures![i], albumId);
 		}
 
-		const resp = await fetch(`/api/albums/${albumId}/add`, {
-			method: 'POST',
-			body: JSON.stringify({
-				kiekjes: kiekjeIds
-			}),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-
-		if (!resp.ok) {
-			console.error('Failed to add kiekjes to album');
-		}
+		processUploads();
+		afterUpload?.();
 	};
 </script>
 
